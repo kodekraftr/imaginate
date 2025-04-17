@@ -1,11 +1,10 @@
 import type { NextRequest } from 'next/server'
-import { getRequestContext } from '@cloudflare/next-on-pages'
+import { getCloudflareContext  } from '@opennextjs/cloudflare'
 
-export const runtime = 'edge'
 
 export async function POST(request: NextRequest) {
     try {
-        const context = getRequestContext()
+        const context = getCloudflareContext()
         // @ts-expect-error AI from context not available
         const { AI } = context.env
         let { prompt, model } = await request.json<{ prompt: string, model: string }>()
