@@ -20,8 +20,13 @@ export async function POST(request: NextRequest) {
                 'Content-Type': 'image/jpeg',
             },
         })
-    } catch (error: any) {
-        console.log(error)
-        return new Response(error.message, { status: 500 })
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            console.log(error);
+            return new Response(error.message, { status: 500 });
+        } else {
+            console.log("An unknown error occurred");
+            return new Response("An unknown error occurred", { status: 500 });
+        }
     }
 }
